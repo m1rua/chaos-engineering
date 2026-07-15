@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 app = FastAPI()
-users_db = [{"id": "1", "name": "andrew"}]
+users_db = [{"id": 1, "name": "andrew"}]
 
 @app.get("/")
 async def hello_world():
