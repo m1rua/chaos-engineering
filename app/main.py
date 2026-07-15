@@ -10,3 +10,4 @@ async def hello_world():
 @app.get("/health")
 async def health_check():
     return {"status": "OK"}
+
