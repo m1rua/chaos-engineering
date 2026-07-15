@@ -13,5 +13,11 @@ async def health_check():
     return {"status": "OK"}
 
 @app.get("/users")
-async def users():
+async def get_users():
+    return users_db
+
+@app.post("/users")
+async def post_users(id: int, name: str):
+    new_user = {"id": id, "name": name}
+    users_db.append(new_user)
     return users_db
