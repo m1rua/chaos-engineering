@@ -17,7 +17,10 @@ spec:
         - name: main-app
           image: chaos-app:latest
           imagePullPolicy: Never
-
+          securityContext:
+            capabilities:
+              add:
+                - "NET_ADMIN"
 ---
 
 apiVersion: v1
