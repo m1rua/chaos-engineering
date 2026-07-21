@@ -12,7 +12,7 @@ pods = v1.list_namespaced_pod(namespace=namespace, label_selector=label_selector
 random_pod = random.choice(pods.items)
 network_delay_pod = random_pod.metadata.name
 network_delay_script = ["sh", "-c", "tc qdisc add dev eth0 root netem delay 120ms"]
-network_delay_fix_script = ["sh", "-c", "tc qdisc add  dev eth0 root netem delay 0ms"]
+network_delay_fix_script = ["sh", "-c", "tc qdisc delete dev eth0 root netem delay 120ms"]
 
 duration = 30
 start_time = time.time
