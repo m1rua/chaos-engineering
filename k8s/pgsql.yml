@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgsql
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgsql
+  template:
+    metadata:
+      labels: 
+        app: pgsql
+    spec:
+      containers:
+        - name: pgsql
+          image: postgres:18
+          env:
+            - name: POSTGRES_DB
+              value: chaos_db
+            - name: POSTGRES_USER
+              value: user 
+            - name: POSTGRES_PASSWORD
+              value: password 
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: md5
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgsql
+
+spec:
+  selector:
+    app: pgsql
+  ports:
+    - port: 5432
+      targetPort: 5432
