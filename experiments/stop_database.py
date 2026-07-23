@@ -1,13 +1,14 @@
 from kubernetes import client, config
-
-congig.load_kube_config()
-v1=clint.CoreV1Api()
+from kubernetes.stream import stream
+config.load_kube_config()
+v1=client.CoreV1Api()
 
 namespace = "default"
 label_selector = "app=postgres"
 
-pgsql_pod = v1.list_namespaced_pod(namespace=namespace, label_selector=label_selector)
-pgsql_pod_name = pgsql_pod.items.metadata.name
+pod = v1.list_namespaced_pod(namespace=namespace, label_selector=label_selector)
+pgsql_pod = pod.items
+pgsql_pod_name = pgsql_pod[0].metadata.name
+stop_database_script = ["sh", "-c", "pkill postgres"]
 
-stop_database_script = "sh", "-c", "pkill postgress"
-restart_database_script = "sh -c "
+stream(v1.connect_get_namespaced_pod_exec, name=pgsql_pod_name, namespace=namespace, command=stop_database_script, stderr=True, stdin=False, stdout=True, tty=False)
