@@ -2,7 +2,7 @@ from kubernetes import client, config
 from kubernetes.stream import stream
 import random
 config.load_kube_config()
-v1 = client.CoreV1Api()
+v1 = client.CoreV1Api() 
 
 namespace = "default"
 label_selector = "app=main-app"
