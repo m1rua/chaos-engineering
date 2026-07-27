@@ -1,6 +1,12 @@
 import requests
 import time
+from kubernetes import config, client
+from kubernetes.stream import stream
 from concurrent.futures import ThreadPoolExecutor
+
+config.load_kube_config()
+v1 = client.CoreV1Api()
+
 start_time = time.time()
 duration = 30
 
